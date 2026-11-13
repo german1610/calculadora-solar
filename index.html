@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculadora Solar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f5f1; --card:#ffffff; --ink:#1d1f1e; --muted:#6b706c; --line:#e4e2db;
+    --sun:#f2a516; --sun-soft:#fff4dc; --green:#1f8a5b; --green-soft:#e3f4ec; --red:#c4462f; --blue:#2463b8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.45}
+  header{padding:28px 20px 8px;max-width:1180px;margin:0 auto}
+  h1{margin:0;font-size:26px;letter-spacing:-.02em}
+  header p{margin:6px 0 0;color:var(--muted)}
+  main{max-width:1180px;margin:0 auto;padding:16px 20px 48px;display:grid;grid-template-columns:380px 1fr;gap:20px;align-items:start}
+  @media (max-width:900px){main{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .card h2{font-size:15px;margin:0 0 12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  .inputs{position:sticky;top:12px}
+  @media (max-width:900px){.inputs{position:static}}
+  label{display:block;font-size:13px;font-weight:600;margin:12px 0 4px}
+  label small{font-weight:400;color:var(--muted)}
+  :root{color-scheme:light}
+  input,select,option{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:9px;font:inherit;background:#fff;color:var(--ink);-webkit-text-fill-color:var(--ink);opacity:1}
+  input::placeholder{color:#a3a7a3;-webkit-text-fill-color:#a3a7a3}
+  input:focus,select:focus{outline:2px solid var(--sun);border-color:transparent}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .big input{font-size:22px;font-weight:700;padding:12px}
+  .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:4px}
+  .seg button{padding:9px 4px;border:1px solid var(--line);background:#fff;border-radius:9px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;color:var(--muted)}
+  .seg button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .hint{font-size:12px;color:var(--muted);margin-top:4px}
+  details{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+  summary{cursor:pointer;font-weight:600;font-size:14px}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+  @media (max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .kpi .l{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+  .kpi .v{font-size:26px;font-weight:700;letter-spacing:-.02em;margin-top:4px}
+  .kpi .s{font-size:12px;color:var(--muted)}
+  .kpi.sun{background:var(--sun-soft);border-color:#f5d999}
+  .kpi.green{background:var(--green-soft);border-color:#bfe3d0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+  @media (max-width:700px){.grid2{grid-template-columns:1fr}}
+  .eq{display:flex;gap:14px;align-items:flex-start}
+  .icon{flex:0 0 44px;height:44px;border-radius:10px;display:grid;place-items:center;font-size:22px;background:var(--sun-soft)}
+  .eq h3{margin:0;font-size:18px}
+  .eq .sub{color:var(--muted);font-size:13px}
+  table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13.5px}
+  td{padding:6px 0;border-bottom:1px solid var(--line);vertical-align:top}
+  td:first-child{color:var(--muted);padding-right:10px}
+  td:last-child{text-align:right;font-weight:600}
+  .warn{background:#fff1ec;border:1px solid #f3c6b8;color:#8a2f1d;border-radius:10px;padding:10px 12px;font-size:13px;margin-top:10px}
+  .ok{background:var(--green-soft);border:1px solid #bfe3d0;color:#145c3c;border-radius:10px;padding:10px 12px;font-size:13px;margin-top:10px}
+  .chart-wrap{margin-top:8px}
+  svg text{font-family:Inter,system-ui,sans-serif}
+  .money td:last-child{font-variant-numeric:tabular-nums}
+  .total td{font-weight:700;color:var(--ink);border-bottom:none;font-size:15px;padding-top:10px}
+  .total td:first-child{color:var(--ink)}
+  .note{font-size:12.5px;color:var(--muted);margin-top:20px}
+  .histgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
+  .histgrid input{padding:7px 6px;font-size:13px;text-align:center}
+  .linkbtn{background:none;border:none;color:var(--muted);font:inherit;font-size:12.5px;cursor:pointer;padding:8px 0 0;text-decoration:underline}
+  .vend{margin-top:14px;border:1px dashed #b9bdb9;border-radius:12px;padding:4px 12px 12px;background:#fbfaf6}
+  .vendhead{font-weight:700;font-size:13.5px;margin-top:10px}
+  .vendhead span{font-weight:400;color:var(--muted);font-size:12px}
+  .btnsec{padding:9px 12px;border:1px solid var(--line);background:#fff;border-radius:9px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;margin-top:8px;color:var(--ink)}
+  .btnsec:hover{background:#f6f5f1}
+  .ejemplo{width:100%;padding:10px;border:1px dashed var(--sun);background:var(--sun-soft);color:#8a5a00;border-radius:10px;font:inherit;font-weight:600;font-size:13.5px;cursor:pointer;margin-bottom:6px}
+  .ejemplo:hover{background:#ffeec4}
+  .infoEj{background:#fbfaf6;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:12.5px;color:var(--muted);margin:6px 0 4px}
+  .infoEj b{color:var(--ink)}
+  .pill{display:inline-block;padding:2px 8px;border-radius:99px;background:#eef2f8;color:var(--blue);font-size:12px;font-weight:600;margin:2px 4px 2px 0}
+</style>
+</head>
+<body>
+<header>
+  <h1>☀️ Calculadora de energía solar</h1>
+  <p>Con los datos de la factura de luz: cuántos paneles, qué inversor y qué baterías hacen falta, cuánto se invierte, cuánto se ahorra y en cuánto tiempo se recupera.</p>
+</header>
+
+<main>
+  <!-- ENTRADAS -->
+  <section class="card inputs">
+    <h2>Datos del cliente</h2>
+
+    <label>Cliente <small>(opcional)</small></label>
+    <input id="cliente" type="text" placeholder="Nombre del cliente">
+
+    <div class="row">
+      <div class="big">
+        <label>kWh de la factura</label>
+        <input id="consumo" type="number" min="1" placeholder="Ej: 278">
+      </div>
+      <div>
+        <label>Período</label>
+        <select id="periodo">
+          <option value="1">Mensual</option>
+          <option value="2">Bimestral</option>
+        </select>
+      </div>
+    </div>
+    <div class="hint">EPEC: columna "CONSUMO kWh" del detalle de medición. Es mensual (liquidación 1 de 2 / 2 de 2).</div>
+
+    <div class="row">
+      <div>
+        <label>Importe de esa factura <small>($)</small></label>
+        <input id="factura" type="number" min="0" placeholder="Ej: 81087">
+      </div>
+      <div>
+        <label>Demanda contratada <small>(kW)</small></label>
+        <input id="demanda" type="number" min="0" step="0.5" placeholder="Ej: 5">
+      </div>
+    </div>
+    <div class="hint">Usá el importe de la liquidación. No el "Total a pagar" si figura $0 (factura ya pagada o con saldo a favor).</div>
+    <div id="precioAviso"></div>
+
+    <details id="histDet">
+      <summary>Historial de 12 meses <small style="font-weight:400;color:var(--muted)">(recomendado)</small></summary>
+      <div class="hint" style="margin-top:6px">Copiá los kWh del "Registro de consumos" de la factura, del más viejo al más nuevo. Con 3 o más valores, el cálculo usa el promedio.</div>
+      <div class="histgrid" id="histGrid"></div>
+      <div id="histInfo"></div>
+      <button type="button" class="linkbtn" id="btnLimpiarHist">Borrar historial</button>
+    </details>
+
+    <label>Tipo de sistema</label>
+    <div class="seg" id="tipoSeg">
+      <button data-v="ongrid" class="on">Conectado a red</button>
+      <button data-v="hibrido">Híbrido</button>
+      <button data-v="offgrid">Aislado</button>
+    </div>
+    <div class="hint" id="tipoHint"></div>
+
+    <label>Zona</label>
+    <select id="zona">
+      <option value="5.2" selected>Córdoba / Centro</option>
+      <option value="4.6">Buenos Aires / Litoral</option>
+      <option value="4.8">NEA (Chaco, Corrientes, Misiones)</option>
+      <option value="5.6">Cuyo (Mendoza, San Juan, San Luis)</option>
+      <option value="5.9">NOA (Salta, Jujuy, Catamarca)</option>
+      <option value="4.7">Patagonia norte (Neuquén, Río Negro)</option>
+      <option value="3.6">Patagonia sur</option>
+    </select>
+    <div class="hint">Horas de sol pico promedio anual (panel inclinado).</div>
+
+    <label>Cuánto de tu consumo querés cubrir: <b id="coberturaVal">100%</b></label>
+    <input id="cobertura" type="range" min="30" max="120" step="5" value="100">
+
+    <div id="bloqueBat">
+      <label id="labBat">Consumo nocturno a cubrir con batería: <b id="nocheVal">100%</b></label>
+      <input id="noche" type="range" min="0" max="100" step="10" value="100">
+      <div id="bloqueAuto">
+        <label>Días de autonomía sin sol</label>
+        <input id="autonomia" type="number" min="0.5" step="0.5" value="1.5">
+      </div>
+    </div>
+
+    <div id="vendedor" class="vend" style="display:none">
+      <div class="vendhead">⚙️ Modo vendedor <span>— precios de venta y supuestos (se guardan en este dispositivo)</span></div>
+
+      <div class="row">
+        <div>
+          <label>Panel</label>
+          <select id="panel">
+            <option value="450">450 W mono</option>
+            <option value="550" selected>550 W mono</option>
+            <option value="580">580 W N-type</option>
+          </select>
+        </div>
+        <div>
+          <label>Dólar <small>($)</small></label>
+          <input id="dolar" type="number" value="1570">
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Precio kWh <small>($)</small></label>
+          <input id="precioKwh" type="number" value="200">
+        </div>
+        <div>
+          <label>Consumo de día <small>(%)</small></label>
+          <input id="diaPct" type="number" min="10" max="90" value="40">
+        </div>
+      </div>
+      <div class="hint" id="precioHint"></div>
+
+      <div class="row">
+        <div>
+          <label>Inyección a red <small>(% del precio)</small></label>
+          <input id="inyPct" type="number" min="0" max="100" value="50">
+        </div>
+        <div>
+          <label>Potencia pico simultánea <small>(kW)</small></label>
+          <input id="pico" type="number" min="0" step="0.5" placeholder="auto">
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Panel <small>(USD venta c/u)</small></label>
+          <input id="pPanel" type="number" value="145">
+        </div>
+        <div>
+          <label>Batería 5,12 kWh <small>(USD venta)</small></label>
+          <input id="pBat" type="number" value="1300">
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label>Inversor <small>(USD venta, vacío = auto)</small></label>
+          <input id="pInv" type="number" placeholder="auto">
+        </div>
+        <div>
+          <label>Instalación <small>(USD por kWp)</small></label>
+          <input id="pMO" type="number" value="180">
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label>Estructura y protecciones <small>(% equipos)</small></label>
+          <input id="pBOS" type="number" value="15">
+        </div>
+        <div>
+          <label>Suba real de la tarifa <small>(%/año)</small></label>
+          <input id="subaTarifa" type="number" step="0.5" value="3">
+        </div>
+      </div>
+      <label>Cargo fijo mensual del cliente <small>($ con impuestos, solo cuenta en aislado)</small></label>
+      <input id="cargoFijo" type="number" value="0">
+
+      <div class="vendhead" style="margin-top:16px">Compartir precios <span>— para usar los mismos en otro celular</span></div>
+      <button type="button" class="btnsec" id="btnCopiarPrecios">📋 Copiar mis precios</button>
+      <label>Pegar código de precios</label>
+      <div class="row" style="grid-template-columns:1fr auto">
+        <input id="codigoPrecios" type="text" placeholder="SOLAR-...">
+        <button type="button" class="btnsec" id="btnAplicarPrecios" style="margin:0">Aplicar</button>
+      </div>
+      <div id="msgPrecios" class="hint"></div>
+    </div>
+    <button type="button" class="linkbtn" id="btnVend">⚙️ Modo vendedor</button>
+  </section>
+
+  <!-- RESULTADOS -->
+  <section>
+    <div class="kpis">
+      <div class="kpi sun"><div class="l">Paneles</div><div class="v" id="kPaneles">–</div><div class="s" id="kPanelesS"></div></div>
+      <div class="kpi"><div class="l">Inversión</div><div class="v" id="kInv">–</div><div class="s" id="kInvS"></div></div>
+      <div class="kpi green"><div class="l">Ahorro por mes</div><div class="v" id="kAhorro">–</div><div class="s" id="kAhorroS"></div></div>
+      <div class="kpi green"><div class="l">Recuperás en</div><div class="v" id="kPayback">–</div><div class="s" id="kPaybackS"></div></div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="eq"><div class="icon">🔆</div><div><h3 id="tPaneles">Paneles</h3><div class="sub" id="sPaneles"></div></div></div>
+        <table id="tabPaneles"></table>
+      </div>
+      <div class="card">
+        <div class="eq"><div class="icon">⚡</div><div><h3 id="tInv">Inversor</h3><div class="sub" id="sInv"></div></div></div>
+        <table id="tabInv"></table>
+        <div id="invNota"></div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="eq"><div class="icon">🔋</div><div><h3 id="tBat">Baterías</h3><div class="sub" id="sBat"></div></div></div>
+        <table id="tabBat"></table>
+      </div>
+      <div class="card">
+        <div class="eq"><div class="icon">💵</div><div><h3>Presupuesto estimado</h3><div class="sub">Equipos en dólares, total en pesos</div></div></div>
+        <table class="money" id="tabCosto"></table>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:20px">
+      <div class="eq"><div class="icon" style="background:var(--green-soft)">📈</div><div><h3>Ahorro y recupero en 25 años</h3><div class="sub" id="sChart"></div></div></div>
+      <div class="chart-wrap" id="chart"></div>
+      <table class="money" id="tabAhorro"></table>
+    </div>
+
+    <p class="note">
+      Son estimaciones para orientarte, no un presupuesto. El precio real depende del techo (orientación, sombras, tipo de estructura), las marcas y el instalador.
+      Para inyectar a la red tenés que hacer el trámite de usuario-generador con tu distribuidora (Ley nacional 27.424; en Córdoba, la Ley provincial 10.604) usando un instalador habilitado y equipos aprobados.
+      Los cálculos usan valores de hoy: la suba de tarifa es la que esperás por encima de la inflación.
+    </p>
+  </section>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const fmt = (n, d=0) => Number(n).toLocaleString('es-AR', {minimumFractionDigits:d, maximumFractionDigits:d});
+const ars = n => '$ ' + fmt(Math.round(n));
+const usd = n => 'USD ' + fmt(Math.round(n));
+const arsCorto = n => {
+  const a = Math.abs(n);
+  if (a >= 1e6) return (n<0?'-':'') + '$ ' + fmt(a/1e6, a>=1e7?1:2) + ' M';
+  if (a >= 1e3) return (n<0?'-':'') + '$ ' + fmt(a/1e3, 0) + ' mil';
+  return ars(n);
+};
+
+// Datos de paneles (valores típicos de hoja de datos)
+const PANELES = {
+  450: {voc:49.3, vmp:41.4, isc:11.6, imp:10.9, area:2.0,  dim:'1903 × 1134 mm', peso:24},
+  550: {voc:49.6, vmp:41.9, isc:14.0, imp:13.1, area:2.58, dim:'2278 × 1134 mm', peso:28},
+  580: {voc:52.0, vmp:43.4, isc:14.1, imp:13.4, area:2.58, dim:'2278 × 1134 mm', peso:28}
+};
+const TAM_INV = [1.5,2,3,3.6,4,5,6,8,10,12,15,20,25,30,40,50];
+const BAT = {kwh:5.12, v:51.2, ah:100, dod:0.9, ef:0.95};
+
+let tipo = 'ongrid';
+const TIPO_HINT = {
+  ongrid: 'Sin baterías. Usás el sol de día y lo que sobra lo inyectás a la red. Es el que más rápido se paga.',
+  hibrido: 'Con baterías y red. Guardás el sobrante para la noche y tenés luz cuando hay cortes.',
+  offgrid: 'Sin red eléctrica. Todo sale de paneles y baterías; hay que sobredimensionar para el invierno.'
+};
+
+document.querySelectorAll('#tipoSeg button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('#tipoSeg button').forEach(x => x.classList.remove('on'));
+  b.classList.add('on'); tipo = b.dataset.v; calc();
+}));
+document.querySelectorAll('input,select').forEach(el => el.addEventListener('input', calc));
+
+function sigTam(kw){ return TAM_INV.find(t => t >= kw - 1e-9) || Math.ceil(kw); }
+
+function calc(){
+  // ---------- Entradas
+  const periodo = +$('periodo').value;
+  const consumoFact = (+$('consumo').value || 0) / periodo;
+  const factura = +$('factura').value || 0;
+  const hist = [...document.querySelectorAll('.hist')].map(i => +i.value || 0).filter(v => v > 0);
+  const usaHist = hist.length >= 3;
+  const consumoMes = usaHist ? hist.reduce((a,b) => a+b, 0) / hist.length / periodo : consumoFact;
+  const diario = consumoMes / 30.4;
+  let precio = +$('precioKwh').value || 0;
+  if (factura > 0 && consumoFact > 0){
+    precio = (factura / periodo) / consumoFact;
+    $('precioKwh').value = Math.round(precio);
+    $('precioHint').textContent = 'Calculado de la factura del cliente: ' + ars(precio) + ' por kWh.';
+  } else {
+    $('precioHint').textContent = 'Se calcula solo al cargar kWh e importe de la factura.';
+  }
+  $('precioAviso').innerHTML = (factura > 0 && consumoFact > 0 && (precio < 190 || precio > 700))
+    ? '<div class="warn">El precio por kWh da ' + ars(precio) + ', fuera de lo normal. Revisá que el importe y los kWh sean de la <b>misma</b> factura.</div>' : '';
+  dibujarHist(hist, usaHist ? consumoMes * periodo : 0);
+  const hsp = +$('zona').value;
+  const cobertura = +$('cobertura').value / 100;
+  const noche = +$('noche').value / 100;
+  const autonomia = +$('autonomia').value || 1;
+  const wp = +$('panel').value;
+  const P = PANELES[wp];
+  const dolar = +$('dolar').value || 1;
+  const diaPct = (+$('diaPct').value || 40) / 100;
+  const inyPct = (+$('inyPct').value || 0) / 100;
+  const subaT = (+$('subaTarifa').value || 0) / 100;
+
+  $('coberturaVal').textContent = Math.round(cobertura*100) + '%';
+  $('nocheVal').textContent = Math.round(noche*100) + '%';
+  $('tipoHint').textContent = TIPO_HINT[tipo];
+  $('bloqueBat').style.display = tipo === 'ongrid' ? 'none' : '';
+  $('labBat').style.display = tipo === 'hibrido' ? '' : 'none';
+  $('noche').style.display = tipo === 'hibrido' ? '' : 'none';
+  $('bloqueAuto').style.display = tipo === 'offgrid' ? '' : 'none';
+
+  const cli = $('cliente').value.trim();
+  document.querySelector('header h1').textContent = cli ? '☀️ Propuesta solar para ' + cli : '☀️ Calculadora de energía solar';
+  if (diario <= 0){ ['kPaneles','kInv','kAhorro','kPayback'].forEach(k => $(k).textContent = '–'); return; }
+
+  // ---------- Paneles
+  const PR = tipo === 'offgrid' ? 0.72 : 0.78;         // pérdidas (temperatura, cables, inversor, suciedad)
+  const hspDis = tipo === 'offgrid' ? hsp * 0.68 : hsp;  // aislado: se diseña para invierno
+  const kwpNec = diario * cobertura / (hspDis * PR);
+  let nPan = Math.max(1, Math.ceil(kwpNec * 1000 / wp));
+
+  // Ventana de tensión del inversor
+  const lv = tipo !== 'ongrid'; // híbrido/aislado de 48 V
+  const vmaxInv = lv ? 500 : 600;
+  const mpptMin = lv ? 125 : 90;
+  const mpptMax = lv ? 425 : 550;
+  const vocFrio = P.voc * 1.10;   // a -10 °C
+  const vmpCal = P.vmp * 0.87;    // a 65 °C de celda
+  let maxSerie = Math.min(Math.floor(vmaxInv / vocFrio), Math.floor(mpptMax / P.vmp));
+  const minSerie = Math.ceil(mpptMin / vmpCal);
+  let strings = Math.ceil(nPan / maxSerie);
+  let serie = Math.ceil(nPan / strings);
+  let ajustado = false;
+  if (serie < minSerie){ serie = minSerie; strings = 1; ajustado = true; }
+  const nFinal = serie * strings;
+  if (nFinal !== nPan) ajustado = true;
+  nPan = nFinal;
+  const kwp = nPan * wp / 1000;
+
+  // ---------- Generación y autoconsumo
+  const genAnual = kwp * hsp * PR * 365;
+  const consAnual = diario * 365;
+
+  // ---------- Baterías
+  let batNec = 0, nBat = 0;
+  if (tipo === 'hibrido') batNec = diario * (1 - diaPct) * noche / (BAT.dod * BAT.ef);
+  if (tipo === 'offgrid') batNec = diario * autonomia / (BAT.dod * BAT.ef);
+  if (tipo !== 'ongrid') nBat = Math.max(tipo === 'offgrid' ? 1 : (noche > 0 ? 1 : 0), Math.ceil(batNec / BAT.kwh - 0.05));
+  const batKwh = nBat * BAT.kwh;
+  const batUtilDia = batKwh * BAT.dod * BAT.ef;
+
+  // ---------- Inversor
+  const picoAuto = Math.max(3, Math.ceil(diario / 4 * 2) / 2);
+  const pico = +$('pico').value || picoAuto;
+  let invKw;
+  if (tipo === 'ongrid') invKw = sigTam(kwp / 1.2);
+  else invKw = sigTam(Math.max(kwp / 1.3, pico * 1.2));
+  const fases = invKw > 10 ? 'Trifásico 380 V' : 'Monofásico 220 V';
+  const mppts = strings === 1 ? 1 : (strings <= 4 ? 2 : Math.ceil(strings / 2));
+  const strPorMppt = Math.ceil(strings / mppts);
+  const iMppt = P.isc * strPorMppt * 1.25;
+  const cargaA = lv ? Math.ceil(Math.min(kwp * 1000, invKw * 1000) / BAT.v / 10) * 10 : 0;
+
+  // ---------- Autoconsumo / ahorro
+  let fracCubierta, autoUsado, inyectado, ahorro1;
+  if (tipo === 'ongrid'){
+    autoUsado = Math.min(genAnual * 0.95, consAnual * diaPct, genAnual);
+    inyectado = Math.max(0, genAnual - autoUsado);
+    ahorro1 = autoUsado * precio + Math.min(inyectado, Math.max(0, consAnual - autoUsado) + inyectado) * precio * inyPct;
+  } else if (tipo === 'hibrido'){
+    const cubre = Math.min(1, diaPct + Math.min(batUtilDia / diario, 1 - diaPct));
+    autoUsado = Math.min(genAnual * 0.93, consAnual * cubre);
+    inyectado = Math.max(0, genAnual * 0.95 - autoUsado);
+    ahorro1 = autoUsado * precio + inyectado * precio * inyPct;
+  } else {
+    autoUsado = Math.min(genAnual * 0.9, consAnual);
+    inyectado = 0;
+    ahorro1 = autoUsado * precio + (+$('cargoFijo').value || 0) * 12;
+  }
+  fracCubierta = autoUsado / consAnual;
+  const gastoActual = consAnual * precio;
+
+  // ---------- Costos (USD)
+  const cPan = nPan * (+$('pPanel').value || 0);
+  const pInvAuto = tipo === 'ongrid' ? 150 + 130 * invKw : 300 + 220 * invKw;
+  const cInv = +$('pInv').value || pInvAuto;
+  $('pInv').placeholder = 'auto: ' + Math.round(pInvAuto);
+  const cBat = nBat * (+$('pBat').value || 0);
+  const equipos = cPan + cInv + cBat;
+  const cBOS = equipos * (+$('pBOS').value || 0) / 100;
+  const cMO = kwp * (+$('pMO').value || 0);
+  const totalUSD = equipos + cBOS + cMO;
+  const totalARS = totalUSD * dolar;
+
+  // ---------- Proyección 25 años
+  const anios = 25, deg = 0.005;
+  let acum = -totalARS, payback = null, flujo = [{a:0, v:acum}], ahorroTotal = 0;
+  const reemplazo = 12;
+  const costoReemplazo = (cInv * 0.8 + cBat * 0.7) * dolar; // los equipos suelen bajar de precio
+  for (let a = 1; a <= anios; a++){
+    const ah = ahorro1 * Math.pow(1 + subaT, a - 1) * Math.pow(1 - deg, a - 1);
+    ahorroTotal += ah;
+    const prev = acum;
+    acum += ah;
+    if (a === reemplazo && tipo !== 'ongrid') acum -= costoReemplazo;
+    if (a === reemplazo && tipo === 'ongrid') acum -= cInv * 0.8 * dolar;
+    if (payback === null && acum >= 0 && prev < 0) payback = a - 1 + (-prev) / (acum - prev);
+    flujo.push({a, v:acum});
+  }
+  const neto25 = acum;
+
+  // ================= RENDER =================
+  $('kPaneles').textContent = nPan + ' × ' + wp + ' W';
+  $('kPanelesS').textContent = fmt(kwp, 2) + ' kWp · ~' + fmt(nPan * P.area, 0) + ' m² de techo';
+  $('kInv').textContent = arsCorto(totalARS);
+  $('kInvS').textContent = usd(totalUSD) + ' aprox.';
+  $('kAhorro').textContent = arsCorto(ahorro1 / 12);
+  $('kAhorroS').textContent = 'Cubrís ' + Math.round(fracCubierta * 100) + '% de tu consumo';
+  if (payback !== null){
+    const y = Math.floor(payback), m = Math.round((payback - y) * 12);
+    $('kPayback').textContent = y + (m === 12 ? 1 : 0) + ' años' + (m > 0 && m < 12 ? ' ' + m + ' m' : '');
+    $('kPaybackS').textContent = 'Ganancia neta en 25 años: ' + arsCorto(neto25);
+  } else {
+    $('kPayback').textContent = '+25 años';
+    $('kPaybackS').textContent = 'No se paga con estos números';
+  }
+
+  // Paneles
+  $('tPaneles').textContent = nPan + ' paneles de ' + wp + ' W';
+  $('sPaneles').textContent = strings + (strings > 1 ? ' strings' : ' string') + ' de ' + serie + ' paneles en serie';
+  $('tabPaneles').innerHTML = rows([
+    ['Potencia instalada', fmt(kwp, 2) + ' kWp'],
+    ['Necesaria (sin redondear)', fmt(kwpNec, 2) + ' kWp'],
+    ['Generación estimada', fmt(genAnual / 12, 0) + ' kWh/mes'],
+    ['Tu consumo', fmt(consumoMes, 0) + ' kWh/mes (' + fmt(diario, 1) + '/día)'],
+    ['Horas de sol pico usadas', fmt(hspDis, 1) + (tipo === 'offgrid' ? ' (invierno)' : ' (promedio anual)')],
+    ['Configuración', strings + ' × ' + serie + ' en serie'],
+    ['Tensión del string (trabajo / máx. en frío)', fmt(P.vmp * serie, 0) + ' V / ' + fmt(vocFrio * serie, 0) + ' V'],
+    ['Superficie / peso', '~' + fmt(nPan * P.area, 0) + ' m² · ' + fmt(nPan * P.peso, 0) + ' kg'],
+    ['Medida de cada panel', P.dim]
+  ]) + (ajustado ? '<tr><td colspan="2" style="color:var(--muted);text-align:left;font-weight:400">La cantidad se redondeó para que los strings queden parejos.</td></tr>' : '');
+
+  // Inversor
+  const tipoInv = tipo === 'ongrid' ? 'On-grid (de inyección a red)' : tipo === 'hibrido' ? 'Híbrido 48 V (red + baterías)' : 'Off-grid 48 V con MPPT integrado';
+  $('tInv').textContent = 'Inversor ' + fmt(invKw, invKw % 1 ? 1 : 0) + ' kW';
+  $('sInv').textContent = tipoInv;
+  const specs = [
+    ['Potencia nominal de salida', fmt(invKw, invKw % 1 ? 1 : 0) + ' kW'],
+    ['Salida', fases + ' · 50 Hz · onda senoidal pura'],
+    ['Potencia FV admitida', '≥ ' + fmt(kwp, 2) + ' kWp'],
+    ['Tensión DC máxima', '≥ ' + fmt(Math.ceil(vocFrio * serie / 10) * 10, 0) + ' V'],
+    ['Rango MPPT debe incluir', fmt(vmpCal * serie, 0) + ' – ' + fmt(P.vmp * serie, 0) + ' V'],
+    ['Cantidad de MPPT', mppts + (strPorMppt > 1 ? ' (' + strPorMppt + ' strings c/u)' : '')],
+    ['Corriente por MPPT', '≥ ' + fmt(iMppt, 0) + ' A']
+  ];
+  if (lv){
+    specs.push(['Tensión de batería', '48 V (litio LiFePO4)']);
+    specs.push(['Corriente de carga', '≥ ' + cargaA + ' A']);
+    specs.push(['Comunicación con batería', 'CAN / RS485 (BMS)']);
+    specs.push(['Potencia pico que vas a usar', fmt(pico, 1) + ' kW' + ($('pico').value ? '' : ' (estimada)')]);
+  } else {
+    specs.push(['Eficiencia', '≥ 97%']);
+    specs.push(['Requisito', 'Certificado para conexión a red']);
+  }
+  $('tabInv').innerHTML = rows(specs);
+  const ej = tipo === 'ongrid' ? ['Growatt MIN/MIC', 'Huawei SUN2000', 'Fronius Primo', 'SMA Sunny Boy'] :
+             tipo === 'hibrido' ? ['Deye SUN-SG LP', 'Growatt SPH/SPF', 'Huawei + LUNA', 'Victron MultiPlus-II'] :
+                                  ['Voltronic Axpert', 'Growatt SPF', 'Deye SUN-SG LP', 'Victron MultiPlus + MPPT'];
+  const demanda = +$('demanda').value || 0;
+  let avisoDem = '';
+  if (demanda > 0 && tipo !== 'offgrid'){
+    avisoDem = invKw > demanda
+      ? '<div class="warn">El inversor (' + fmt(invKw, invKw % 1 ? 1 : 0) + ' kW) supera tu demanda contratada de ' + fmt(demanda, 1) + ' kW. Para inyectar a la red tenés que pedirle a la distribuidora que te la amplíe, o limitar el inversor a ' + fmt(demanda, 1) + ' kW (podés dejar los paneles igual: el inversor admite más potencia FV que su salida).</div>'
+      : '<div class="ok">Entra dentro de tu demanda contratada de ' + fmt(demanda, 1) + ' kW.</div>';
+  }
+  $('invNota').innerHTML = avisoDem + '<div class="hint" style="margin-top:10px">Familias que suelen cumplir: ' + ej.map(e => '<span class="pill">' + e + '</span>').join('') + '</div>';
+
+  // Baterías
+  if (tipo === 'ongrid'){
+    $('tBat').textContent = 'Sin baterías';
+    $('sBat').textContent = 'No hacen falta en un sistema conectado a red';
+    $('tabBat').innerHTML = rows([
+      ['Si después querés respaldo', 'Elegí "Híbrido"'],
+      ['Ojo', 'Un on-grid se apaga cuando se corta la luz']
+    ]);
+  } else {
+    $('tBat').textContent = nBat + (nBat === 1 ? ' batería' : ' baterías') + ' de ' + fmt(BAT.kwh, 2) + ' kWh';
+    $('sBat').textContent = 'LiFePO4 48 V 100 Ah, en paralelo';
+    const horas = batUtilDia / (diario / 24);
+    $('tabBat').innerHTML = rows([
+      ['Capacidad total', fmt(batKwh, 2) + ' kWh (' + nBat * BAT.ah + ' Ah a 48 V)'],
+      ['Energía útil (90% de descarga)', fmt(batKwh * BAT.dod, 1) + ' kWh'],
+      ['Necesaria', fmt(batNec, 1) + ' kWh'],
+      ['Te alcanza para', '~' + fmt(horas, 0) + ' h a consumo promedio'],
+      tipo === 'offgrid' ? ['Autonomía sin sol', fmt(autonomia, 1) + ' días'] : ['Cubre de la noche', Math.round(Math.min(1, batUtilDia / (diario * (1 - diaPct))) * 100) + '%'],
+      ['Vida útil', '~6.000 ciclos (10–15 años)'],
+      ['Conexión', nBat > 1 ? nBat + ' en paralelo + barra de unión' : 'Directa al inversor']
+    ]);
+  }
+
+  // Costos
+  $('tabCosto').innerHTML = rows([
+    [nPan + ' paneles', usd(cPan)],
+    ['Inversor ' + fmt(invKw, invKw % 1 ? 1 : 0) + ' kW', usd(cInv)],
+    nBat ? [nBat + ' baterías', usd(cBat)] : null,
+    ['Estructura, cables y protecciones', usd(cBOS)],
+    ['Mano de obra e instalación', usd(cMO)],
+    ['Total en dólares', usd(totalUSD)]
+  ].filter(Boolean)) + '<tr class="total"><td>Total en pesos</td><td>' + ars(totalARS) + '</td></tr>';
+
+  // Ahorro
+  $('sChart').textContent = 'Valores de hoy. Incluye el cambio de inversor' + (nBat ? ' y baterías' : '') + ' en el año ' + reemplazo + '.';
+  $('tabAhorro').innerHTML = rows([
+    ['Gasto actual en luz', ars(gastoActual / 12) + '/mes · ' + ars(gastoActual) + '/año'],
+    ['Energía que dejás de comprar', fmt(autoUsado / 12, 0) + ' kWh/mes'],
+    tipo !== 'offgrid' ? ['Energía que inyectás a la red', fmt(inyectado / 12, 0) + ' kWh/mes (pagada al ' + Math.round(inyPct * 100) + '%)'] : null,
+    ['Ahorro el primer año', ars(ahorro1)],
+    ['Ahorro acumulado en 25 años', ars(ahorroTotal)],
+    ['Ganancia neta en 25 años', ars(neto25)],
+    ['CO₂ evitado', '~' + fmt(genAnual * 0.37 / 1000, 1) + ' t por año']
+  ].filter(Boolean));
+
+  dibujar(flujo, payback);
+}
+
+function rows(arr){ return arr.map(r => '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>').join(''); }
+
+function dibujar(flujo, payback){
+  const W = 760, H = 260, pl = 70, pr = 16, pt = 16, pb = 32;
+  const vals = flujo.map(f => f.v);
+  let min = Math.min(0, ...vals), max = Math.max(0, ...vals);
+  const pad = (max - min) * 0.08 || 1; min -= pad; max += pad;
+  const x = a => pl + a / 25 * (W - pl - pr);
+  const y = v => pt + (max - v) / (max - min) * (H - pt - pb);
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Flujo acumulado">`;
+  // grilla
+  for (let i = 0; i <= 4; i++){
+    const v = min + (max - min) * i / 4, yy = y(v);
+    s += `<line x1="${pl}" x2="${W-pr}" y1="${yy}" y2="${yy}" stroke="#ecebe5"/>`;
+    s += `<text x="${pl-8}" y="${yy+4}" font-size="11" fill="#6b706c" text-anchor="end">${arsCorto(v)}</text>`;
+  }
+  for (let a = 0; a <= 25; a += 5) s += `<text x="${x(a)}" y="${H-10}" font-size="11" fill="#6b706c" text-anchor="middle">Año ${a}</text>`;
+  // área
+  let path = flujo.map((f,i) => (i ? 'L' : 'M') + x(f.a) + ' ' + y(f.v)).join(' ');
+  s += `<path d="${path} L ${x(25)} ${y(0)} L ${x(0)} ${y(0)} Z" fill="#1f8a5b" fill-opacity=".08"/>`;
+  s += `<line x1="${pl}" x2="${W-pr}" y1="${y(0)}" y2="${y(0)}" stroke="#1d1f1e" stroke-width="1"/>`;
+  s += `<path d="${path}" fill="none" stroke="#1f8a5b" stroke-width="2.5" stroke-linejoin="round"/>`;
+  flujo.forEach(f => s += `<circle cx="${x(f.a)}" cy="${y(f.v)}" r="2.5" fill="${f.v < 0 ? '#c4462f' : '#1f8a5b'}"><title>Año ${f.a}: ${ars(f.v)}</title></circle>`);
+  if (payback !== null){
+    const px = x(payback);
+    s += `<line x1="${px}" x2="${px}" y1="${pt}" y2="${H-pb}" stroke="#f2a516" stroke-dasharray="4 4" stroke-width="1.5"/>`;
+    s += `<text x="${px+6}" y="${pt+12}" font-size="12" font-weight="600" fill="#b77700">Recuperado: año ${fmt(payback,1)}</text>`;
+  }
+  s += '</svg>';
+  $('chart').innerHTML = s;
+}
+
+// ---------- Historial de 12 meses
+for (let i = 1; i <= 12; i++){
+  const inp = document.createElement('input');
+  inp.type = 'number'; inp.min = '0'; inp.className = 'hist';
+  inp.placeholder = i === 1 ? 'más viejo' : (i === 12 ? 'último' : 'mes ' + i);
+  inp.addEventListener('input', calc);
+  $('histGrid').appendChild(inp);
+}
+$('btnLimpiarHist').addEventListener('click', () => { document.querySelectorAll('.hist').forEach(i => i.value = ''); calc(); });
+
+function dibujarHist(h, prom){
+  if (h.length < 3){
+    $('histInfo').innerHTML = h.length ? '<div class="hint">Cargá al menos 3 meses para usar el promedio.</div>' : '';
+    return;
+  }
+  const max = Math.max(...h), W = 300, Hh = 60, bw = W / h.length;
+  let svg = `<svg viewBox="0 0 ${W} ${Hh+4}" width="100%" style="margin-top:8px">`;
+  h.forEach((v, i) => {
+    const bh = Math.max(2, v / max * Hh);
+    svg += `<rect x="${i*bw+2}" y="${Hh-bh}" width="${bw-4}" height="${bh}" rx="2" fill="${v > prom ? '#f2a516' : '#cfd8cf'}"><title>${v} kWh</title></rect>`;
+  });
+  svg += `<line x1="0" x2="${W}" y1="${Hh - prom/max*Hh}" y2="${Hh - prom/max*Hh}" stroke="#1d1f1e" stroke-dasharray="3 3" stroke-width=".8"/></svg>`;
+  $('histInfo').innerHTML = svg + `<div class="ok" style="margin-top:6px">Promedio de ${h.length} meses: <b>${fmt(prom,0)} kWh/mes</b>. Es el consumo que se usa para el cálculo.</div>`;
+}
+
+// ---------- Modo vendedor (precios guardados en este dispositivo)
+const CAMPOS_VEND = ['panel','dolar','diaPct','inyPct','pPanel','pBat','pInv','pMO','pBOS','subaTarifa'];
+try {
+  const g = JSON.parse(localStorage.getItem('solar_vendedor') || '{}');
+  CAMPOS_VEND.forEach(k => { if (g[k] !== undefined && g[k] !== '') $(k).value = g[k]; });
+} catch(e){}
+CAMPOS_VEND.forEach(k => $(k).addEventListener('input', () => {
+  try { const o = {}; CAMPOS_VEND.forEach(c => o[c] = $(c).value); localStorage.setItem('solar_vendedor', JSON.stringify(o)); } catch(e){}
+}));
+function guardarVend(){ try { const o = {}; CAMPOS_VEND.forEach(c => o[c] = $(c).value); localStorage.setItem('solar_vendedor', JSON.stringify(o)); } catch(e){} }
+$('btnCopiarPrecios').addEventListener('click', () => {
+  const o = {}; CAMPOS_VEND.forEach(c => o[c] = $(c).value);
+  const cod = 'SOLAR-' + btoa(unescape(encodeURIComponent(JSON.stringify(o))));
+  $('codigoPrecios').value = cod;
+  const ok = () => $('msgPrecios').textContent = 'Código copiado. Mandalo por WhatsApp y que lo pegue en "Pegar código de precios".';
+  try { navigator.clipboard.writeText(cod).then(ok).catch(() => { $('codigoPrecios').select(); $('msgPrecios').textContent = 'Copiá el código del recuadro y mandalo por WhatsApp.'; }); }
+  catch(e){ $('codigoPrecios').select(); $('msgPrecios').textContent = 'Copiá el código del recuadro y mandalo por WhatsApp.'; }
+});
+$('btnAplicarPrecios').addEventListener('click', () => {
+  try {
+    const t = $('codigoPrecios').value.trim();
+    if (!t.startsWith('SOLAR-')) throw 0;
+    const o = JSON.parse(decodeURIComponent(escape(atob(t.slice(6)))));
+    CAMPOS_VEND.forEach(c => { if (o[c] !== undefined) $(c).value = o[c]; });
+    guardarVend(); calc();
+    $('msgPrecios').textContent = 'Precios cargados y guardados en este dispositivo.';
+  } catch(e){ $('msgPrecios').textContent = 'El código no es válido. Copialo completo, desde SOLAR- hasta el final.'; }
+});
+$('btnVend').addEventListener('click', () => {
+  const v = $('vendedor'), abierto = v.style.display !== 'none';
+  v.style.display = abierto ? 'none' : '';
+  $('btnVend').textContent = abierto ? '⚙️ Modo vendedor' : 'Ocultar modo vendedor';
+});
+
+calc();
+</script>
+</body>
+</html>
