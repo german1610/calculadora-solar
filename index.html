@@ -162,20 +162,61 @@
     <div id="vendedor" class="vend" style="display:none">
       <div class="vendhead">⚙️ Modo vendedor <span>— precios de venta y supuestos (se guardan en este dispositivo)</span></div>
 
-      <div class="row">
-        <div>
-          <label>Panel</label>
-          <select id="panel">
-            <option value="450">450 W mono</option>
-            <option value="550" selected>550 W mono</option>
-            <option value="580">580 W N-type</option>
+      <label>Panel</label>
+      <select id="panel">
+            <optgroup label="Chicos (12 V, aislados / bombeo)">
+              <option value="100">100 W policristalino 36 celdas</option>
+              <option value="150">150 W mono 36 celdas</option>
+              <option value="200">200 W mono 36 celdas</option>
+            </optgroup>
+            <optgroup label="Residenciales (generación anterior)">
+              <option value="330">330 W policristalino 72 celdas</option>
+              <option value="380">380 W mono 120 medias celdas</option>
+            </optgroup>
+            <optgroup label="Residenciales compactos">
+              <option value="410">410 W mono 108 medias celdas</option>
+              <option value="450">450 W mono 144 medias celdas</option>
+            </optgroup>
+            <optgroup label="Estándar actuales">
+              <option value="500">500 W mono 132 medias celdas</option>
+              <option value="540">540 W mono 144 medias celdas</option>
+              <option value="550" selected>550 W mono 144 medias celdas</option>
+              <option value="555">555 W mono 144 medias celdas</option>
+            </optgroup>
+            <optgroup label="N-type / TOPCon">
+              <option value="580">580 W N-type TOPCon 144</option>
+              <option value="620">620 W N-type TOPCon 132 (210R)</option>
+            </optgroup>
+            <optgroup label="Gran formato (210 mm, obras grandes)">
+              <option value="600">600 W mono 120 medias celdas (210)</option>
+              <option value="650">650 W mono 132 medias celdas (210)</option>
+              <option value="670">670 W mono 132 medias celdas (210)</option>
+              <option value="700">700 W N-type 132 (210)</option>
+            </optgroup>
+            <optgroup label="Otro">
+              <option value="custom">✏️ Personalizado (hoja técnica)</option>
+            </optgroup>
           </select>
+      <div class="hint" id="panelHint">Datos típicos de hoja técnica. Si tu proveedor te da otro modelo, elegí "Personalizado".</div>
+      <div id="panelCustom" style="display:none">
+        <div class="row">
+          <div><label>Potencia <small>(Wp)</small></label><input id="cWp" type="number" placeholder="Ej: 550"></div>
+          <div><label>Voc <small>(V)</small></label><input id="cVoc" type="number" step="0.1" placeholder="Ej: 49.6"></div>
         </div>
-        <div>
-          <label>Dólar <small>($)</small></label>
-          <input id="dolar" type="number" value="1570">
+        <div class="row">
+          <div><label>Vmp <small>(V)</small></label><input id="cVmp" type="number" step="0.1" placeholder="Ej: 41.9"></div>
+          <div><label>Isc <small>(A)</small></label><input id="cIsc" type="number" step="0.1" placeholder="Ej: 14"></div>
         </div>
+        <div class="row">
+          <div><label>Largo <small>(mm)</small></label><input id="cLargo" type="number" placeholder="Ej: 2278"></div>
+          <div><label>Ancho <small>(mm)</small></label><input id="cAncho" type="number" placeholder="Ej: 1134"></div>
+        </div>
+        <label>Peso <small>(kg)</small></label><input id="cPeso" type="number" step="0.1" placeholder="Ej: 28">
+        <div class="hint">Están en la etiqueta de atrás del panel o en la hoja técnica (datos STC). Los que dejes vacíos se completan con los del 550 W.</div>
       </div>
+
+      <label>Dólar <small>($)</small></label>
+      <input id="dolar" type="number" value="1570">
 
       <div class="row">
         <div>
@@ -202,8 +243,9 @@
 
       <div class="row">
         <div>
-          <label>Panel <small>(USD venta c/u)</small></label>
-          <input id="pPanel" type="number" value="145">
+          <label>Panel <small>(USD venta por W)</small></label>
+          <input id="pPanel" type="number" step="0.01" value="0.26">
+          <div class="hint" id="pPanelHint"></div>
         </div>
         <div>
           <label>Batería 5,12 kWh <small>(USD venta)</small></label>
@@ -303,12 +345,35 @@ const arsCorto = n => {
   return ars(n);
 };
 
-// Datos de paneles (valores típicos de hoja de datos)
+// Datos de paneles (valores típicos de hoja técnica, STC)
 const PANELES = {
-  450: {voc:49.3, vmp:41.4, isc:11.6, imp:10.9, area:2.0,  dim:'1903 × 1134 mm', peso:24},
-  550: {voc:49.6, vmp:41.9, isc:14.0, imp:13.1, area:2.58, dim:'2278 × 1134 mm', peso:28},
-  580: {voc:52.0, vmp:43.4, isc:14.1, imp:13.4, area:2.58, dim:'2278 × 1134 mm', peso:28}
+  '100': {wp:100, voc:22.5, vmp:18.5, isc:5.8, area:0.68, dim:'1010 × 670 mm', peso:7.5},
+  '150': {wp:150, voc:22.6, vmp:18.6, isc:8.6, area:0.99, dim:'1480 × 670 mm', peso:10},
+  '200': {wp:200, voc:23.6, vmp:19.6, isc:10.9, area:1.28, dim:'1580 × 808 mm', peso:12},
+  '330': {wp:330, voc:46.0, vmp:37.6, isc:9.3, area:1.94, dim:'1956 × 992 mm', peso:22},
+  '380': {wp:380, voc:41.3, vmp:34.3, isc:11.7, area:1.82, dim:'1755 × 1038 mm', peso:20},
+  '410': {wp:410, voc:37.3, vmp:31.3, isc:13.9, area:1.95, dim:'1722 × 1134 mm', peso:21},
+  '450': {wp:450, voc:49.3, vmp:41.4, isc:11.6, area:2.17, dim:'2094 × 1038 mm', peso:23.5},
+  '500': {wp:500, voc:45.6, vmp:38.0, isc:13.9, area:2.37, dim:'2094 × 1134 mm', peso:26},
+  '540': {wp:540, voc:49.5, vmp:41.6, isc:13.9, area:2.58, dim:'2279 × 1134 mm', peso:28},
+  '550': {wp:550, voc:49.6, vmp:41.9, isc:14.0, area:2.58, dim:'2278 × 1134 mm', peso:28},
+  '555': {wp:555, voc:49.9, vmp:42.2, isc:14.1, area:2.58, dim:'2279 × 1134 mm', peso:28},
+  '580': {wp:580, voc:52.0, vmp:43.4, isc:14.1, area:2.58, dim:'2278 × 1134 mm', peso:28},
+  '620': {wp:620, voc:48.6, vmp:40.5, isc:16.0, area:2.7, dim:'2382 × 1134 mm', peso:31},
+  '600': {wp:600, voc:41.7, vmp:34.8, isc:18.4, area:2.83, dim:'2172 × 1303 mm', peso:32},
+  '650': {wp:650, voc:45.4, vmp:38.0, isc:18.2, area:3.11, dim:'2384 × 1303 mm', peso:35},
+  '670': {wp:670, voc:46.1, vmp:38.6, isc:18.6, area:3.11, dim:'2384 × 1303 mm', peso:35},
+  '700': {wp:700, voc:48.2, vmp:40.2, isc:18.4, area:3.11, dim:'2384 × 1303 mm', peso:38},
 };
+function panelActual(){
+  const k = $('panel').value;
+  $('panelCustom').style.display = k === 'custom' ? '' : 'none';
+  if (k !== 'custom') return PANELES[k] || PANELES['550'];
+  const b = PANELES['550'], n = id => +$(id).value || 0;
+  const largo = n('cLargo') || 2278, ancho = n('cAncho') || 1134;
+  return {wp: n('cWp') || b.wp, voc: n('cVoc') || b.voc, vmp: n('cVmp') || b.vmp, isc: n('cIsc') || b.isc,
+          area: largo * ancho / 1e6, dim: largo + ' × ' + ancho + ' mm', peso: n('cPeso') || b.peso};
+}
 const TAM_INV = [1.5,2,3,3.6,4,5,6,8,10,12,15,20,25,30,40,50];
 const BAT = {kwh:5.12, v:51.2, ah:100, dod:0.9, ef:0.95};
 
@@ -351,8 +416,8 @@ function calc(){
   const cobertura = +$('cobertura').value / 100;
   const noche = +$('noche').value / 100;
   const autonomia = +$('autonomia').value || 1;
-  const wp = +$('panel').value;
-  const P = PANELES[wp];
+  const P = panelActual();
+  const wp = P.wp;
   const dolar = +$('dolar').value || 1;
   const diaPct = (+$('diaPct').value || 40) / 100;
   const inyPct = (+$('inyPct').value || 0) / 100;
@@ -438,7 +503,9 @@ function calc(){
   const gastoActual = consAnual * precio;
 
   // ---------- Costos (USD)
-  const cPan = nPan * (+$('pPanel').value || 0);
+  const pW = +$('pPanel').value || 0;
+  const cPan = nPan * wp * pW;
+  $('pPanelHint').textContent = '= ' + usd(wp * pW) + ' por panel de ' + wp + ' W';
   const pInvAuto = tipo === 'ongrid' ? 150 + 130 * invKw : 300 + 220 * invKw;
   const cInv = +$('pInv').value || pInvAuto;
   $('pInv').placeholder = 'auto: ' + Math.round(pInvAuto);
@@ -638,10 +705,13 @@ function dibujarHist(h, prom){
 }
 
 // ---------- Modo vendedor (precios guardados en este dispositivo)
-const CAMPOS_VEND = ['panel','dolar','diaPct','inyPct','pPanel','pBat','pInv','pMO','pBOS','subaTarifa'];
+// Versiones anteriores guardaban el precio por panel de 550 W: lo paso a USD por W
+function migrarPrecioPanel(){ const v = +$('pPanel').value; if (v > 3) $('pPanel').value = Math.round(v / 550 * 1000) / 1000; }
+const CAMPOS_VEND = ['panel','cWp','cVoc','cVmp','cIsc','cLargo','cAncho','cPeso','dolar','diaPct','inyPct','pPanel','pBat','pInv','pMO','pBOS','subaTarifa'];
 try {
   const g = JSON.parse(localStorage.getItem('solar_vendedor') || '{}');
   CAMPOS_VEND.forEach(k => { if (g[k] !== undefined && g[k] !== '') $(k).value = g[k]; });
+  migrarPrecioPanel();
 } catch(e){}
 CAMPOS_VEND.forEach(k => $(k).addEventListener('input', () => {
   try { const o = {}; CAMPOS_VEND.forEach(c => o[c] = $(c).value); localStorage.setItem('solar_vendedor', JSON.stringify(o)); } catch(e){}
@@ -661,6 +731,7 @@ $('btnAplicarPrecios').addEventListener('click', () => {
     if (!t.startsWith('SOLAR-')) throw 0;
     const o = JSON.parse(decodeURIComponent(escape(atob(t.slice(6)))));
     CAMPOS_VEND.forEach(c => { if (o[c] !== undefined) $(c).value = o[c]; });
+    migrarPrecioPanel();
     guardarVend(); calc();
     $('msgPrecios').textContent = 'Precios cargados y guardados en este dispositivo.';
   } catch(e){ $('msgPrecios').textContent = 'El código no es válido. Copialo completo, desde SOLAR- hasta el final.'; }
