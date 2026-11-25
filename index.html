@@ -70,6 +70,70 @@
   .vendhead span{font-weight:400;color:var(--muted);font-size:12px}
   .btnsec{padding:9px 12px;border:1px solid var(--line);background:#fff;border-radius:9px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;margin-top:8px;color:var(--ink)}
   .btnsec:hover{background:#f6f5f1}
+  .btnpresu{width:100%;padding:14px;border:none;border-radius:12px;background:#123b73;color:#fff;font:inherit;font-weight:700;font-size:15px;cursor:pointer;margin:-6px 0 20px;box-shadow:0 2px 0 #f5b900}
+  .btnpresu:hover{background:#0d2d59}
+  #presu{position:fixed;inset:0;background:#d9dce1;overflow:auto;z-index:50;padding:0 0 40px}
+  .presu-bar{position:sticky;top:0;background:#123b73;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;z-index:2}
+  .presu-bar button{padding:9px 12px;border-radius:9px;border:1px solid #fff3;background:#ffffff14;color:#fff;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+  .presu-bar .pb-main{background:#f5b900;color:#123b73;border-color:#f5b900}
+  .pb-hint{color:#cfd9ea;font-size:12px;flex-basis:100%}
+  .hoja{width:210mm;min-height:297mm;margin:18px auto;box-sizing:border-box;background:#fff;color:#1d2433;padding:0 0 9mm;box-shadow:0 4px 24px #0003;font-family:Inter,Arial,sans-serif;font-size:10.5pt;position:relative}
+  @media (max-width:820px){.hoja{width:auto;min-height:0;margin:10px}}
+  .h-top{height:5mm;background:#123b73;border-bottom:2mm solid #f5b900}
+  .h-head{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:4mm 14mm 2.5mm}
+  .h-brand{display:flex;align-items:center;gap:12px}
+  .h-brand img{max-height:22mm;max-width:60mm;object-fit:contain}
+  .h-name{font-size:20pt;font-weight:800;color:#123b73;letter-spacing:-.02em;line-height:1}
+  .h-name span{display:block;font-size:10pt;color:#f5b900;letter-spacing:.25em;font-weight:800;margin-top:3px}
+  .h-doc{text-align:right}
+  .h-doc .t{font-size:15pt;font-weight:800;color:#123b73;letter-spacing:.04em}
+  .h-doc div{font-size:9.5pt;color:#56607a}
+  .h-data{margin:0 14mm;padding:1.8mm 0;border-top:1px solid #e3e8f1;border-bottom:1px solid #e3e8f1;display:flex;flex-wrap:wrap;gap:3px 14px;font-size:8.2pt;color:#56607a}
+  .h-data b{color:#123b73}
+  .h-sec{margin:3.2mm 14mm 0}
+  .h-sec h4{margin:0 0 1.5mm;font-size:9pt;letter-spacing:.08em;text-transform:uppercase;color:#123b73}
+  .h-cli{display:grid;grid-template-columns:1.4fr 1fr 1.3fr .8fr;gap:0;border:1px solid #dfe5ef;border-radius:6px;overflow:hidden}
+  .h-cli div{padding:1.6mm 3mm;background:#f4f7fb;border-right:1px solid #fff;font-size:9.5pt}
+  .h-cli div small{display:block;font-size:7.5pt;color:#7a849b;font-weight:700;letter-spacing:.05em}
+  .h-sis{display:flex;flex-wrap:wrap;gap:4px}
+  .h-sis span{background:#f4f7fb;border:1px solid #dfe5ef;border-radius:99px;padding:.7mm 2.2mm;font-size:8pt}
+  .h-sis b{color:#123b73}
+  table.h-it{width:100%;border-collapse:collapse;font-size:9.5pt;margin-top:0}
+  .h-it th{background:#123b73;color:#fff;text-align:left;padding:2.2mm 2.5mm;font-size:8.5pt;letter-spacing:.05em}
+  .h-it td{padding:1.3mm 2.5mm;border-bottom:1px solid #e8edf4;vertical-align:top}
+  .h-it td:first-child,.h-it th:first-child{text-align:center;width:12mm}
+  .h-it td:nth-child(3),.h-it td:nth-child(4),.h-it th:nth-child(3),.h-it th:nth-child(4){text-align:right;white-space:nowrap}
+  .h-it td small{color:#7a849b;display:block;font-size:8pt}
+  .h-tot{margin-left:auto;width:85mm;margin-top:2mm;font-size:10pt}
+  .h-tot div{display:flex;justify-content:space-between;padding:1.5mm 2.5mm}
+  .h-tot .g{background:#123b73;color:#fff;font-weight:800;font-size:12pt;border-radius:5px;border-bottom:1.2mm solid #f5b900}
+  .h-usd{font-size:8.5pt;color:#7a849b;text-align:right;margin-top:1mm}
+  .h-ah{display:grid;grid-template-columns:repeat(4,1fr);gap:2.5mm}
+  .h-ah div{border:1px solid #dfe5ef;border-radius:6px;padding:2mm 2.5mm;background:#f4f7fb}
+  .h-ah small{display:block;font-size:7.5pt;font-weight:700;color:#7a849b;letter-spacing:.04em;text-transform:uppercase}
+  .h-ah b{font-size:12pt;color:#123b73}
+  .h-ah .y{background:#fff8de;border-color:#f5d76e}
+  .h-ah-t{font-size:9pt;color:#56607a;margin-top:2mm}
+  .h-ahwrap{display:grid;grid-template-columns:1fr 1fr;gap:4mm;align-items:center}
+  .h-ahwrap .h-ah{grid-template-columns:1fr 1fr}
+  .h-chart svg{display:block;width:100%;height:auto}
+  .h-obs{font-size:8.3pt;color:#3b4459;margin:0;padding-left:5mm;outline:none}
+  .h-obs li{margin-bottom:1mm}
+  .h-obs:focus{background:#fffbe8}
+  .h-firma{display:flex;justify-content:space-between;align-items:flex-end;margin:5mm 14mm 0}
+  .h-firma .f{width:65mm;border-top:1px solid #9aa3b5;text-align:center;font-size:8.5pt;color:#7a849b;padding-top:1.5mm}
+  .h-lema{font-style:italic;color:#123b73;font-size:10pt}
+  .h-foot{position:absolute;left:0;right:0;bottom:0;height:5mm;background:#123b73;border-top:1.2mm solid #f5b900}
+  @media print{
+    @page{size:A4;margin:0}
+    body{background:#fff}
+    body > *:not(#presu){display:none !important}
+    #presu{position:static;display:block !important;background:#fff;padding:0;overflow:visible}
+    .noprint{display:none !important}
+    .hoja{margin:0;box-shadow:none;width:210mm;min-height:297mm}
+    .h-sec,.h-firma{break-inside:avoid}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
   .ejemplo{width:100%;padding:10px;border:1px dashed var(--sun);background:var(--sun-soft);color:#8a5a00;border-radius:10px;font:inherit;font-weight:600;font-size:13.5px;cursor:pointer;margin-bottom:6px}
   .ejemplo:hover{background:#ffeec4}
   .infoEj{background:#fbfaf6;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:12.5px;color:var(--muted);margin:6px 0 4px}
@@ -90,6 +154,10 @@
 
     <label>Cliente <small>(opcional)</small></label>
     <input id="cliente" type="text" placeholder="Nombre del cliente">
+    <div class="row">
+      <div><label>Teléfono <small>(opcional)</small></label><input id="cliTel" type="text" placeholder="351 ..."></div>
+      <div><label>Domicilio <small>(opcional)</small></label><input id="cliDom" type="text" placeholder="Calle y número"></div>
+    </div>
 
     <div class="row">
       <div class="big">
@@ -275,6 +343,27 @@
       <label>Cargo fijo mensual del cliente <small>($ con impuestos, solo cuenta en aislado)</small></label>
       <input id="cargoFijo" type="number" value="0">
 
+      <div class="vendhead" style="margin-top:16px">Datos de tu empresa <span>— para el presupuesto</span></div>
+      <label>Empresa</label><input id="eEmpresa" type="text" value="SCH Solar Córdoba">
+      <div class="row">
+        <div><label>CUIT</label><input id="eCuit" type="text" value="20-28270674-2"></div>
+        <div><label>Tel. / WhatsApp</label><input id="eTel" type="text" value="351 662-4120"></div>
+      </div>
+      <div class="row">
+        <div><label>Dirección</label><input id="eDir" type="text" value="Bartolomé Murillo 3958"></div>
+        <div><label>Email</label><input id="eMail" type="text" value="schsolarcba@gmail.com"></div>
+      </div>
+      <label>Frase al pie</label><input id="eLema" type="text" value="Energía Solar, una inversión para tu futuro.">
+      <div class="row">
+        <div><label>Validez <small>(días)</small></label><input id="eValidez" type="number" min="1" value="7"></div>
+        <div><label>IVA <small>(se suma a tus precios)</small></label>
+          <select id="eIva"><option value="0">No discriminar</option><option value="10.5">10,5%</option><option value="21">21%</option></select></div>
+      </div>
+      <label>Forma de pago</label><input id="ePago" type="text" value="A convenir">
+      <label>Logo <small>(imagen, opcional — se guarda en este dispositivo)</small></label>
+      <input id="eLogo" type="file" accept="image/*">
+      <button type="button" class="linkbtn" id="btnQuitarLogo">Quitar logo</button>
+
       <div class="vendhead" style="margin-top:16px">Compartir precios <span>— para usar los mismos en otro celular</span></div>
       <button type="button" class="btnsec" id="btnCopiarPrecios">📋 Copiar mis precios</button>
       <label>Pegar código de precios</label>
@@ -295,6 +384,8 @@
       <div class="kpi green"><div class="l">Ahorro por mes</div><div class="v" id="kAhorro">–</div><div class="s" id="kAhorroS"></div></div>
       <div class="kpi green"><div class="l">Recuperás en</div><div class="v" id="kPayback">–</div><div class="s" id="kPaybackS"></div></div>
     </div>
+
+    <button type="button" id="btnPresu" class="btnpresu">📄 Generar presupuesto para el cliente</button>
 
     <div class="grid2">
       <div class="card">
@@ -332,6 +423,16 @@
     </p>
   </section>
 </main>
+
+<div id="presu" style="display:none">
+  <div class="presu-bar noprint">
+    <button type="button" id="btnImprimir" class="pb-main">🖨️ Guardar PDF / Imprimir</button>
+    <button type="button" id="btnWhats">💬 Copiar resumen para WhatsApp</button>
+    <button type="button" id="btnCerrarPresu">✕ Cerrar</button>
+    <div class="pb-hint" id="presuMsg">Podés tocar las observaciones para editarlas antes de guardar.</div>
+  </div>
+  <div class="hoja" id="hoja"></div>
+</div>
 
 <script>
 const $ = id => document.getElementById(id);
@@ -433,7 +534,7 @@ function calc(){
 
   const cli = $('cliente').value.trim();
   document.querySelector('header h1').textContent = cli ? '☀️ Propuesta solar para ' + cli : '☀️ Calculadora de energía solar';
-  if (diario <= 0){ ['kPaneles','kInv','kAhorro','kPayback'].forEach(k => $(k).textContent = '–'); return; }
+  if (diario <= 0){ window.R = null; ['kPaneles','kInv','kAhorro','kPayback'].forEach(k => $(k).textContent = '–'); return; }
 
   // ---------- Paneles
   const PR = tipo === 'offgrid' ? 0.72 : 0.78;         // pérdidas (temperatura, cables, inversor, suciedad)
@@ -645,6 +746,8 @@ function calc(){
   ].filter(Boolean));
 
   dibujar(flujo, payback);
+  window.R = {tipo, nPan, wp, kwp, invKw, fases, tipoInv, nBat, batKwh, cPan, cInv, cBat, cBOS, cMO, totalUSD, totalARS, dolar,
+    ahorro1, ahorroTotal, payback, neto25, fracCubierta, consumoMes, genAnual, autoUsado, inyectado, gastoActual, precio, demanda, usaHist};
 }
 
 function rows(arr){ return arr.map(r => '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>').join(''); }
@@ -677,6 +780,7 @@ function dibujar(flujo, payback){
   }
   s += '</svg>';
   $('chart').innerHTML = s;
+  window.lastChart = s;
 }
 
 // ---------- Historial de 12 meses
@@ -707,7 +811,7 @@ function dibujarHist(h, prom){
 // ---------- Modo vendedor (precios guardados en este dispositivo)
 // Versiones anteriores guardaban el precio por panel de 550 W: lo paso a USD por W
 function migrarPrecioPanel(){ const v = +$('pPanel').value; if (v > 3) $('pPanel').value = Math.round(v / 550 * 1000) / 1000; }
-const CAMPOS_VEND = ['panel','cWp','cVoc','cVmp','cIsc','cLargo','cAncho','cPeso','dolar','diaPct','inyPct','pPanel','pBat','pInv','pMO','pBOS','subaTarifa'];
+const CAMPOS_VEND = ['eEmpresa','eCuit','eTel','eDir','eMail','eLema','eValidez','eIva','ePago','panel','cWp','cVoc','cVmp','cIsc','cLargo','cAncho','cPeso','dolar','diaPct','inyPct','pPanel','pBat','pInv','pMO','pBOS','subaTarifa'];
 try {
   const g = JSON.parse(localStorage.getItem('solar_vendedor') || '{}');
   CAMPOS_VEND.forEach(k => { if (g[k] !== undefined && g[k] !== '') $(k).value = g[k]; });
@@ -740,6 +844,138 @@ $('btnVend').addEventListener('click', () => {
   const v = $('vendedor'), abierto = v.style.display !== 'none';
   v.style.display = abierto ? 'none' : '';
   $('btnVend').textContent = abierto ? '⚙️ Modo vendedor' : 'Ocultar modo vendedor';
+});
+
+// ---------- Presupuesto con hoja membretada
+const esc = t => String(t ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let LOGO = '';
+try { LOGO = localStorage.getItem('solar_logo') || ''; } catch(e){}
+$('eLogo').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  const img = new Image(), rd = new FileReader();
+  rd.onload = () => { img.src = rd.result; };
+  img.onload = () => {
+    const k = Math.min(1, 500 / Math.max(img.width, img.height));
+    const c = document.createElement('canvas'); c.width = img.width * k; c.height = img.height * k;
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+    LOGO = c.toDataURL('image/png');
+    try { localStorage.setItem('solar_logo', LOGO); } catch(err){}
+  };
+  rd.readAsDataURL(f);
+});
+$('btnQuitarLogo').addEventListener('click', () => { LOGO = ''; $('eLogo').value = ''; try { localStorage.removeItem('solar_logo'); } catch(e){} });
+
+function logoSVG(){
+  return `<svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true"><circle cx="27" cy="27" r="11" fill="#f5b900"/>${
+    Array.from({length:8}, (_, i) => { const a = i * Math.PI / 4, x1 = 27 + Math.cos(a)*16, y1 = 27 + Math.sin(a)*16, x2 = 27 + Math.cos(a)*24, y2 = 27 + Math.sin(a)*24;
+      return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#123b73" stroke-width="4" stroke-linecap="round"/>`; }).join('')}</svg>`;
+}
+
+function armarPresupuesto(){
+  calc();
+  const r = window.R;
+  if (!r || !r.nPan){ alertaPresu('Cargá primero los datos de la factura del cliente.'); return false; }
+  const hoy = new Date(), dd = n => String(n).padStart(2, '0');
+  const fecha = dd(hoy.getDate()) + '/' + dd(hoy.getMonth()+1) + '/' + hoy.getFullYear();
+  const nro = hoy.getFullYear() + dd(hoy.getMonth()+1) + dd(hoy.getDate()) + '-' + dd(hoy.getHours()) + dd(hoy.getMinutes());
+  const validez = +$('eValidez').value || 7, iva = +$('eIva').value || 0;
+  const emp = $('eEmpresa').value.trim() || 'SCH Solar Córdoba';
+  const partes = emp.split(' '), ult = partes.length > 1 ? partes.pop() : '';
+  const panelTxt = $('panel').value === 'custom' ? 'Panel solar ' + r.wp + ' W' : 'Panel solar ' + $('panel').selectedOptions[0].text;
+  const tipoTxt = r.tipo === 'ongrid' ? 'Conectado a red (on-grid)' : r.tipo === 'hibrido' ? 'Híbrido con baterías' : 'Aislado (off-grid)';
+  const d = r.dolar, invTxt = fmt(r.invKw, r.invKw % 1 ? 1 : 0);
+  const items = [
+    [r.nPan, panelTxt, 'Garantía según fabricante', r.cPan * d / r.nPan],
+    [1, 'Inversor ' + invTxt + ' kW', r.tipoInv + ' · ' + r.fases, r.cInv * d],
+    r.nBat ? [r.nBat, 'Batería de litio LiFePO4 48 V · 5,12 kWh', 'Total ' + fmt(r.batKwh, 2) + ' kWh de almacenamiento', r.cBat * d / r.nBat] : null,
+    [1, 'Estructura de montaje, cableado y protecciones', 'Soportes, cable solar, tablero de protecciones DC/AC y puesta a tierra', r.cBOS * d],
+    [1, 'Instalación y puesta en marcha', 'Mano de obra, montaje y configuración del sistema', r.cMO * d]
+  ].filter(Boolean);
+  const sub = items.reduce((a, it) => a + it[0] * it[3], 0), ivaM = sub * iva / 100, total = sub + ivaM;
+  const pb = r.payback !== null ? (Math.floor(r.payback) + ' años' + (Math.round((r.payback % 1) * 12) ? ' ' + Math.round((r.payback % 1) * 12) + ' meses' : '')) : 'más de 25 años';
+  const superaDem = r.demanda > 0 && r.tipo !== 'offgrid' && r.invKw > r.demanda;
+  const obs = [
+    `Precios en pesos calculados con dólar a ${ars(d)}. Validez: ${validez} días desde la fecha del presupuesto.`,
+    `Forma de pago: ${esc($('ePago').value || 'a convenir')}.`,
+    `El ahorro es una estimación según el consumo ${r.usaHist ? 'promedio de los últimos 12 meses' : 'de la factura presentada'} y la tarifa actual de EPEC. Puede variar según el consumo, el clima y los cambios de tarifa.`,
+    r.tipo !== 'offgrid' ? 'Para inyectar energía a la red se gestiona el alta como usuario-generador ante EPEC (Ley 27.424 / Ley provincial 10.604).' : null,
+    superaDem ? `El inversor (${invTxt} kW) supera la demanda contratada (${fmt(r.demanda,1)} kW): requiere solicitar ampliación a EPEC.` : null,
+    'Sujeto a visita técnica para verificar techo, orientación y sombras.'
+  ].filter(Boolean);
+  const cli = v => esc(v) || '&nbsp;';
+  $('hoja').innerHTML = `
+    <div class="h-top"></div>
+    <div class="h-head">
+      <div class="h-brand">${LOGO ? `<img src="${LOGO}" alt="">` : logoSVG()}
+        ${LOGO ? '' : `<div class="h-name">${esc(partes.join(' '))}<span>${esc(ult.toUpperCase())}</span></div>`}</div>
+      <div class="h-doc"><div class="t">PRESUPUESTO</div><div>N° ${nro}</div><div>Fecha: ${fecha}</div><div>Válido por ${validez} días</div></div>
+    </div>
+    <div class="h-data">
+      ${$('eCuit').value ? `<span><b>CUIT</b> ${esc($('eCuit').value)}</span>` : ''}
+      ${$('eDir').value ? `<span><b>Dirección</b> ${esc($('eDir').value)}</span>` : ''}
+      ${$('eTel').value ? `<span><b>Tel. / WhatsApp</b> ${esc($('eTel').value)}</span>` : ''}
+      ${$('eMail').value ? `<span><b>Email</b> ${esc($('eMail').value)}</span>` : ''}
+    </div>
+    <div class="h-sec"><h4>Cliente</h4>
+      <div class="h-cli">
+        <div><small>CLIENTE / EMPRESA</small>${cli($('cliente').value)}</div><div><small>TELÉFONO</small>${cli($('cliTel').value)}</div>
+        <div><small>DOMICILIO</small>${cli($('cliDom').value)}</div><div><small>FECHA</small>${fecha}</div>
+      </div>
+    </div>
+    <div class="h-sec"><h4>Sistema propuesto</h4>
+      <div class="h-sis"><span><b>${tipoTxt}</b></span><span>Potencia <b>${fmt(r.kwp,2)} kWp</b></span>
+        <span>Consumo ${r.usaHist ? 'promedio' : ''} <b>${fmt(r.consumoMes,0)} kWh/mes</b></span><span>Generación estimada <b>${fmt(r.genAnual/12,0)} kWh/mes</b></span>
+        <span>Superficie aprox. <b>${fmt(r.nPan * (panelActual().area),0)} m²</b></span></div>
+    </div>
+    <div class="h-sec"><h4>Detalle</h4>
+      <table class="h-it"><thead><tr><th>CANT.</th><th>DESCRIPCIÓN</th><th>PRECIO UNIT.</th><th>TOTAL</th></tr></thead><tbody>
+      ${items.map(it => `<tr><td>${it[0]}</td><td><b>${esc(it[1])}</b><small>${esc(it[2])}</small></td><td>${ars(it[3])}</td><td>${ars(it[0]*it[3])}</td></tr>`).join('')}
+      </tbody></table>
+      <div class="h-tot">
+        ${iva ? `<div><span>Subtotal</span><span>${ars(sub)}</span></div><div><span>IVA ${fmt(iva,1)}%</span><span>${ars(ivaM)}</span></div>` : ''}
+        <div class="g"><span>TOTAL</span><span>${ars(total)}</span></div>
+      </div>
+      <div class="h-usd">Equivalente aprox. USD ${fmt(Math.round(total / d))}</div>
+    </div>
+    <div class="h-sec"><h4>Lo que vas a ahorrar</h4>
+      <div class="h-ahwrap"><div class="h-ah">
+        <div><small>Ahorro por mes</small><b>${ars(r.ahorro1/12)}</b></div>
+        <div><small>Ahorro primer año</small><b>${ars(r.ahorro1)}</b></div>
+        <div class="y"><small>Recuperás la inversión en</small><b>${pb}</b></div>
+        <div><small>Ganancia neta en 25 años</small><b>${arsCorto(r.neto25)}</b></div>
+      </div><div class="h-chart">${window.lastChart || ''}</div></div>
+      <div class="h-ah-t">Cubrís aproximadamente el <b>${Math.round(r.fracCubierta*100)}%</b> de tu consumo de luz con energía propia${r.inyectado > 0 ? ' y el excedente se inyecta a la red' : ''}.</div>
+    </div>
+    <div class="h-sec"><h4>Observaciones</h4>
+      <ul class="h-obs" contenteditable="true">${obs.map(o => `<li>${o}</li>`).join('')}</ul>
+    </div>
+    <div class="h-firma"><div class="h-lema">${esc($('eLema').value)}</div><div class="f">Firma y aclaración</div></div>
+    <div class="h-foot"></div>`;
+  window.RESUMEN = `☀️ *Presupuesto ${emp}*\n` +
+    ($('cliente').value ? `Cliente: ${$('cliente').value}\n` : '') + `Fecha: ${fecha} · Válido ${validez} días\n\n` +
+    `🔆 Sistema: ${tipoTxt} de ${fmt(r.kwp,2)} kWp\n` +
+    items.map(it => `• ${it[0]} × ${it[1]}`).join('\n') + `\n\n` +
+    `💰 *Total: ${ars(total)}*${iva ? ' (IVA incluido)' : ''}\n` +
+    `📉 Ahorro estimado: ${ars(r.ahorro1/12)} por mes\n` +
+    `⏱️ Recuperás la inversión en ${pb}\n\n` +
+    `${$('eTel').value ? '📞 ' + $('eTel').value + '\n' : ''}${$('eLema').value}`;
+  return true;
+}
+function alertaPresu(m){ const b = $('btnPresu'); const t = b.textContent; b.textContent = '⚠️ ' + m; setTimeout(() => b.textContent = t, 2500); }
+$('btnPresu').addEventListener('click', () => {
+  if (!armarPresupuesto()) return;
+  $('presu').style.display = ''; $('presu').scrollTop = 0; document.body.style.overflow = 'hidden';
+});
+$('btnCerrarPresu').addEventListener('click', () => { $('presu').style.display = 'none'; document.body.style.overflow = ''; });
+$('btnImprimir').addEventListener('click', () => {
+  try { window.print(); $('presuMsg').textContent = 'En la ventana que se abre elegí "Guardar como PDF". En iPhone: tocá Compartir para mandarlo por WhatsApp.'; }
+  catch(e){ $('presuMsg').textContent = 'Desde acá no se puede imprimir: abrilo desde tu link de GitHub, o sacale captura.'; }
+});
+$('btnWhats').addEventListener('click', () => {
+  const t = window.RESUMEN || '';
+  const ok = () => $('presuMsg').textContent = 'Resumen copiado: pegalo en WhatsApp. Después mandá también el PDF.';
+  try { navigator.clipboard.writeText(t).then(ok).catch(() => $('presuMsg').textContent = 'No se pudo copiar automáticamente.'); }
+  catch(e){ $('presuMsg').textContent = 'No se pudo copiar automáticamente.'; }
 });
 
 calc();
